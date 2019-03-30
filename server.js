@@ -71,7 +71,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
 app.post('/submitDreams', urlencodedParser, function(request, response) {
-console.log(request.body);
+//console.log(request.body);
 
   db.serialize(function() {
          // db.run("DELETE FROM Dreams");
