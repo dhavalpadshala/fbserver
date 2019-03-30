@@ -5,12 +5,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-//app.set('port', (process.env.PORT || 5000));
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -33,7 +28,7 @@ db.serialize(function(){
     
     // insert default dreams
     db.serialize(function() {
-      db.run('INSERT INTO Dreams (dream) VALUES ("Find and count some sheep"), ("Climb a really tall mountain"), ("Wash the dishes111")');
+      db.run('INSERT INTO Dreams (dream) VALUES ("Find and count some sheep"), ("Climb a really tall mountain"), ("Wash the dishes")');
     });
   }
   else {
@@ -61,28 +56,16 @@ app.get('/getDreams', function(request, response) {
 });
 
 
-
-
-// create application/json parser
-var jsonParser = bodyParser.json()
- 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
-
-app.post('/submitDreams', urlencodedParser, function(request, response) {
-//console.log(request.body);
-
-  db.serialize(function() {
-         // db.run("DELETE FROM Dreams");
-      db.run("INSERT INTO Dreams (dream) VALUES ('"+ request.body.data +"')");
+app.post('/setDreams', function(request, response) {
+  console.log(request.body);
+  /*
+ db.serialize(function() {
+      db.run('INSERT INTO Dreams (dream) VALUES ("dhaval")');
     });
+    */
+     response.send(JSON.stringify(request.body));
 });
-
-//app.listen(8080);
-
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });
-
