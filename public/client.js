@@ -9,6 +9,7 @@ let dreams = [];
 const dreamsList = document.getElementById('dreams');
 const dreamsForm = document.forms[0];
 const dreamInput = dreamsForm.elements['dream'];
+
 // a helper function to call when our request for dreams is done
 const getDreamsListener = function() {
   // parse our response to convert to JSON
@@ -42,22 +43,9 @@ dreamsForm.onsubmit = function(event) {
   dreams.push(dreamInput.value);
   appendNewDream(dreamInput.value);
 
- var xhr = new XMLHttpRequest();
-xhr.open("POST", '/submitDreams');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
- xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-
-var params = 'data='+dreamInput.value;
-
-xhr.onreadystatechange = function() { // Call a function when the state changes.
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        // Request finished. Do processing here.
-    }
-}
-
- xhr.send(params);
-  
+  const dreamRequest1 = new XMLHttpRequest();
+dreamRequest1.open('post', '/setDreams');
+dreamRequest1.send("data="+dreamInput.value);
   
   // reset form 
   dreamInput.value = '';
